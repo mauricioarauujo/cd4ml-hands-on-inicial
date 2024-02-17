@@ -19,7 +19,8 @@ class TestTracking:
 
         specification = {"problem_name": "foo_problem"}
 
-        colormap = {"setosa": "red", "versicolor": "green", "virginica": "blue"}
+        colormap = {"setosa": "red",
+                    "versicolor": "green", "virginica": "blue"}
         colors = [colormap[x] for x in flowers["species"]]
 
         output_file(NamedTemporaryFile().name)
@@ -42,7 +43,8 @@ class TestTracking:
         filenames = get_model_files("unit-test-id", base_data_dir=tmp_path)
         model_dir = filenames["results_folder"]
         files = os.listdir(model_dir)
-        assert set(files) == {"validation_plot.html", "model_specification.json"}
+        assert set(files) == {"validation_plot.html",
+                              "model_specification.json"}
 
     def test_tracking_dictionaries_only(self, tmp_path):
         specification = {"problem_name": "foo_problem"}
