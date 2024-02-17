@@ -1,4 +1,5 @@
 import logging
+
 logger = logging.getLogger(__name__)
 
 
@@ -10,7 +11,7 @@ def get_feature_importance_emsemble(trained_model, encoder, print_features=True)
 
     if print_features:
         importance_pairs = sorted(feature_importance.items(), key=lambda x: -x[1])
-        logger.info('Feature Importance')
+        logger.info("Feature Importance")
         logger.info("-" * 40)
         for pair in importance_pairs:
             logger.info(pair)
@@ -27,9 +28,9 @@ def get_feature_importance_linear_model(trained_model, encoder, print_features=T
     feature_importance = {k: v for k, v in zip(names, importances)}
 
     if print_features:
-        logger.info(f'intercept {intercept}')
+        logger.info(f"intercept {intercept}")
         importance_pairs = sorted(feature_importance.items(), key=lambda x: -x[1])
-        logger.info('Feature Importance')
+        logger.info("Feature Importance")
         logger.info("-" * 40)
         for pair in importance_pairs:
             logger.info(pair)
@@ -38,9 +39,13 @@ def get_feature_importance_linear_model(trained_model, encoder, print_features=T
 
 
 def get_feature_importance(trained_model, model_name, encoder, print_features=True):
-    if model_name in ['random_forest', 'gradient_boosting', 'adaboost']:
-        return get_feature_importance_emsemble(trained_model, encoder, print_features=print_features)
-    elif model_name in ['ridge', 'lasso']:
-        return get_feature_importance_linear_model(trained_model, encoder, print_features=print_features)
+    if model_name in ["random_forest", "gradient_boosting", "adaboost"]:
+        return get_feature_importance_emsemble(
+            trained_model, encoder, print_features=print_features
+        )
+    elif model_name in ["ridge", "lasso"]:
+        return get_feature_importance_linear_model(
+            trained_model, encoder, print_features=print_features
+        )
     else:
         return None

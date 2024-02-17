@@ -16,27 +16,32 @@ def date_to_ymd(date):
 
 
 def date_to_day_of_week(record, lookup):
-    return base_record_to_feature(record['date'], lookup, 'dayofweek')
+    return base_record_to_feature(record["date"], lookup, "dayofweek")
 
 
 def date_to_day_off(record, lookup):
-    return float_or_zero(base_record_to_feature(record['date'], lookup, 'dayoff') == 'True')
+    return float_or_zero(
+        base_record_to_feature(record["date"], lookup, "dayoff") == "True"
+    )
 
 
 def date_to_days_until_end(record, lookup):
-    return float_or_zero(base_record_to_feature(record['date'], lookup, 'days_til_end_of_data'))
+    return float_or_zero(
+        base_record_to_feature(record["date"], lookup, "days_til_end_of_data")
+    )
 
 
 def item_nbr_to_product_class(record, lookup):
-    return base_record_to_feature(record['item_nbr'], lookup, 'class')
+    return base_record_to_feature(record["item_nbr"], lookup, "class")
 
 
 def item_nbr_to_product_family(record, lookup):
-    return base_record_to_feature(record['item_nbr'], lookup, 'family')
+    return base_record_to_feature(record["item_nbr"], lookup, "family")
 
 
 def item_nbr_to_perishable(record, lookup):
-    return int(base_record_to_feature(record['item_nbr'], lookup, 'perishable'))
+    return int(base_record_to_feature(record["item_nbr"], lookup, "perishable"))
+
 
 # derive
 # from date: year, month, day, dayofweek, days_til_end_of_data, dayoff

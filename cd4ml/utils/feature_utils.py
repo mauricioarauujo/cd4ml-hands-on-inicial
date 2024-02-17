@@ -9,15 +9,13 @@ def get_feature_params(this_file):
     :return: dictionary of params
     """
     this_dir = os.path.dirname(this_file)
-    param_file = "%s/%s" % (this_dir, 'params.json')
-    return json.load(open(param_file, 'r'))
+    param_file = "%s/%s" % (this_dir, "params.json")
+    return json.load(open(param_file, "r"))
 
 
-def get_generic_feature_set(identifier_field,
-                            target_field,
-                            info,
-                            this_file,
-                            feature_set_class):
+def get_generic_feature_set(
+    identifier_field, target_field, info, this_file, feature_set_class
+):
     """
     The function to call from Problem class. This makes the FeatureSet class
     referentially transparent and therefore easier to test

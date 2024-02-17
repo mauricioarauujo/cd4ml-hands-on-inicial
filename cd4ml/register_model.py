@@ -28,20 +28,20 @@ def register_model(model_id, host_name, did_pass_acceptance_test):
     logger.info(f"Reporting data for model {model_id}")
 
     file_names = get_model_files(model_id)
-    specification = get_json(file_names['model_specification'])
+    specification = get_json(file_names["model_specification"])
 
-    mlflow.set_experiment(specification['problem_name'])
+    mlflow.set_experiment(specification["problem_name"])
 
     with mlflow.start_run(run_name=model_id):
-        log_param("ProblemName", specification['problem_name'])
-        log_param("MLPipelineParamsName", specification['ml_pipeline_params_name'])
-        log_param("FeatureSetName", specification['feature_set_name'])
-        log_param("AlgorithmName", specification['algorithm_name'])
-        log_param("AlgorithmParamsName", specification['algorithm_params_name'])
+        log_param("ProblemName", specification["problem_name"])
+        log_param("MLPipelineParamsName", specification["ml_pipeline_params_name"])
+        log_param("FeatureSetName", specification["feature_set_name"])
+        log_param("AlgorithmName", specification["algorithm_name"])
+        log_param("AlgorithmParamsName", specification["algorithm_params_name"])
 
         set_tag("DidPassAcceptanceTest", did_pass_acceptance_test)
-        set_tag("BuildNumber", os.getenv('BUILD_NUMBER'))
+        set_tag("BuildNumber", os.getenv("BUILD_NUMBER"))
 
         log_model_metrics_file(file_names["model_metrics"])
         log_ml_pipeline_params_file(file_names["ml_pipeline_params"])
-        log_artifacts(file_names['results_folder'])
+        log_artifacts(file_names["results_folder"])

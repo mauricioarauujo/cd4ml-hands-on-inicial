@@ -10,6 +10,7 @@ import urllib
 from random import Random
 import urllib.request
 import logging
+
 logger = logging.getLogger(__name__)
 
 
@@ -62,10 +63,10 @@ def hash_to_uniform_random(val, seed):
     val_string = str(val) + str(val.__class__)
     seed_string = str(seed) + str(seed.__class__)
     string = val_string + seed_string
-    return float(unpack('<Q', hash_string_obj(string).digest()[:8])[0]) / 2 ** 64
+    return float(unpack("<Q", hash_string_obj(string).digest()[:8])[0]) / 2**64
 
 
-def flatten_dict(pyobj, keystring=''):
+def flatten_dict(pyobj, keystring=""):
     if type(pyobj) is dict:
         if type(pyobj) is dict:
             keystring = keystring + "_" if keystring else keystring
@@ -108,7 +109,9 @@ def float_or_zero(x):
         return 0.0
 
 
-def average_by(stream, averaged_field, by_field, prior_num=0, prior_value=0.0, transform=None):
+def average_by(
+    stream, averaged_field, by_field, prior_num=0, prior_value=0.0, transform=None
+):
     """
     Average a value by some other field and return a dict of the averages
     Uses Laplace smoothing to deal with the noise from low numbers
@@ -139,21 +142,28 @@ def average_by(stream, averaged_field, by_field, prior_num=0, prior_value=0.0, t
 
     keys = summation.keys()
     prior_summation = prior_num * prior_value
-    averages = {k: ((summation[k] + prior_summation)/(number[k] + prior_num), number[k]) for k in keys}
+    averages = {
+        k: ((summation[k] + prior_summation) / (number[k] + prior_num), number[k])
+        for k in keys
+    }
 
     return averages
 
 
 def download_to_file_from_url(url, filename, use_cache=True):
     if not os.path.exists(filename) or not use_cache:
-        logger.info('Data file download from url: %s' % url)
+        logger.info("Data file download from url: %s" % url)
         start = time()
         urllib.request.urlretrieve(url, filename)
-        runtime = time()-start
-        logger.info('Download took %0.2f seconds' % runtime)
+        runtime = time() - start
+        logger.info("Download took %0.2f seconds" % runtime)
         return 1
     else:
-        logger.info("Found a cached training file '{}'. Will use this for training.".format(filename))
+        logger.info(
+            "Found a cached training file '{}'. Will use this for training.".format(
+                filename
+            )
+        )
         return 0
 
 
@@ -196,11 +206,11 @@ def shuffle_csv_file(filename, filename_shuffled, seed=3623365):
     """
     rand = Random()
     rand.seed(seed)
-    fp = open(filename, 'r')
+    fp = open(filename, "r")
     lines = fp.readlines()
     fp.close()
 
-    fp = open(filename_shuffled, 'w')
+    fp = open(filename_shuffled, "w")
     header = lines[0]
     fp.writelines([header])
     lines = lines[1:]
@@ -214,5 +224,5 @@ def get_uuid():
 
 
 def get_json(filename):
-    with open(filename, 'r') as fp:
+    with open(filename, "r") as fp:
         return json.load(fp)

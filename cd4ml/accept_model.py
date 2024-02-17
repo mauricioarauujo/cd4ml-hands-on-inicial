@@ -2,13 +2,15 @@ import os
 import mlflow
 import mlflow.tracking
 
-TENANT = os.getenv('TENANT', 'local')
+TENANT = os.getenv("TENANT", "local")
 
 # TODO: delete this file?
 
 
 def get_latest_executed_run(df_of_runs):
-    filtered_dataframe = df_of_runs[df_of_runs["tags.mlflow.runName"] == os.environ["BUILD_NUMBER"]]
+    filtered_dataframe = df_of_runs[
+        df_of_runs["tags.mlflow.runName"] == os.environ["BUILD_NUMBER"]
+    ]
     assert len(filtered_dataframe) == 1
     return filtered_dataframe
 
@@ -24,13 +26,17 @@ def check_model_performance_deprecated(metric_name, threshold_min, threshold_max
     last_run_record = get_latest_executed_run(runs)
     metric_value = get_metric(metric_name, last_run_record)
     run_name = last_run_record["tags.mlflow.runName"].head().values[0]
-    template = "Metric: {metric_name} for Run: {run_name} was not accepted, " \
-               "value: {metric_value}, " \
-               "threshold_min: {threshold_min}, threshold_max: {threshold_max}"
-    message = template.format(run_name=run_name,
-                              metric_name=metric_name,
-                              metric_value=metric_value,
-                              threshold_min=threshold_min,
-                              threshold_max=threshold_max)
+    template = (
+        "Metric: {metric_name} for Run: {run_name} was not accepted, "
+        "value: {metric_value}, "
+        "threshold_min: {threshold_min}, threshold_max: {threshold_max}"
+    )
+    message = template.format(
+        run_name=run_name,
+        metric_name=metric_name,
+        metric_value=metric_value,
+        threshold_min=threshold_min,
+        threshold_max=threshold_max,
+    )
 
     assert threshold_min <= metric_value <= threshold_max, message

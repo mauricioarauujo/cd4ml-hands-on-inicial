@@ -1,7 +1,9 @@
 import joblib
 
 
-def get_target_id_features_lists(identifier_field, target_field, feature_set, processed_stream):
+def get_target_id_features_lists(
+    identifier_field, target_field, feature_set, processed_stream
+):
     features = []
     identifiers = []
     targets = []

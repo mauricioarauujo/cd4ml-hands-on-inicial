@@ -9,12 +9,12 @@ script_names = ["pipeline", "register_model", "acceptance"]
 
 def run_python_script(script_name, *args, **kwargs):
     logger = logging.getLogger(__name__)
-    if 'profiler' in kwargs:
+    if "profiler" in kwargs:
         use_profiler = True
     else:
         use_profiler = False
 
-    if script_name == 'show':
+    if script_name == "show":
         logger.info("\nAvailable scripts\n----------------")
         for s in script_names:
             logger.info(s)
@@ -27,7 +27,9 @@ def run_python_script(script_name, *args, **kwargs):
     elif script_name == "acceptance":
         from scripts import acceptance as executable_script
     else:
-        message = "Error, script_name ({}) must be one of {}".format(script_name, script_names)
+        message = "Error, script_name ({}) must be one of {}".format(
+            script_name, script_names
+        )
         raise ValueError(message)
 
     if profiler:
@@ -42,9 +44,9 @@ def run_python_script(script_name, *args, **kwargs):
 
 if __name__ == "__main__":
     cd4ml_logging.init()
-    profiler = ' -p' in ' '.join(sys.argv)
+    profiler = " -p" in " ".join(sys.argv)
     script = sys.argv[1]
     arguments = sys.argv[2:]
     # remove the profile flag now that profiler is on
-    arguments = [i for i in arguments if i != '-p']
+    arguments = [i for i in arguments if i != "-p"]
     run_python_script(script, arguments, profiler=profiler)

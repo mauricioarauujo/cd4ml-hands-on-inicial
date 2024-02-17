@@ -2,14 +2,14 @@ from cd4ml.utils.date_utils import add_to_date_string, ymd_to_date_string
 
 
 def get_cutoff_dates(ml_pipeline_params):
-    days_back = ml_pipeline_params['days_back']
-    max_date = ml_pipeline_params['max_date']
+    days_back = ml_pipeline_params["days_back"]
+    max_date = ml_pipeline_params["max_date"]
     date_cutoff = add_to_date_string(max_date, days=-days_back)
     return date_cutoff, max_date
 
 
 def get_date_from_row(row):
-    numbers = (int(row['year']), int(row['month']), int(row['day']))
+    numbers = (int(row["year"]), int(row["month"]), int(row["day"]))
     return ymd_to_date_string(numbers)
 
 

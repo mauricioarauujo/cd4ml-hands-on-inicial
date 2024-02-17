@@ -10,18 +10,18 @@ def parse_date_to_arrow(date_string):
     first_part = first_part.split(":")[0]
 
     try:
-        format_string = 'M/D/YY'
+        format_string = "M/D/YY"
         arrow_date = arrow.get(first_part, format_string)
     except arrow.parser.ParserError:
         try:
-            format_string = 'DD-MMM-YY'
+            format_string = "DD-MMM-YY"
             arrow_date = arrow.get(first_part, format_string)
         except arrow.parser.ParserError:
             try:
-                format_string = 'YYYY-MM-DD'
+                format_string = "YYYY-MM-DD"
                 arrow_date = arrow.get(first_part, format_string)
             except arrow.parser.ParserError:
-                format_string = 'DDMMMYYYY'
+                format_string = "DDMMMYYYY"
                 arrow_date = arrow.get(first_part, format_string)
 
     return arrow_date
@@ -39,8 +39,10 @@ def get_days_from_start_date(current_date, start_date):
 
 def get_day_range_dates(num_days, stride_days):
     first = datetime.date(2000, 1, 1)
-    return [first + datetime.timedelta(days=x)
-            for x in range(0, num_days * stride_days, stride_days)]
+    return [
+        first + datetime.timedelta(days=x)
+        for x in range(0, num_days * stride_days, stride_days)
+    ]
 
 
 @memo
@@ -49,13 +51,13 @@ def convert_date_to_ymd(date):
     :param date: a date string
     :return: date in 'YYYY-MM-DD' format (e.g. 1978-03-30)
     """
-    date_format = 'YYYY-MM-DD'
+    date_format = "YYYY-MM-DD"
     return parse_date_to_arrow(date).format(date_format)
 
 
 def add_to_date_string(date_string, years=0, months=0, days=0):
     arrow_obj = parse_date_to_arrow(date_string)
-    fmt = 'YYYY-MM-DD'
+    fmt = "YYYY-MM-DD"
     return arrow_obj.shift(years=years, months=months, days=days).format(fmt)
 
 
@@ -79,7 +81,7 @@ def ymd_to_date_string(ymd):
 
 @memo
 def date_to_ymd(date_string):
-    ymd = date_string.split('-')
+    ymd = date_string.split("-")
     ymd = [int(i) for i in ymd]
     year, month, day = ymd
     return year, month, day

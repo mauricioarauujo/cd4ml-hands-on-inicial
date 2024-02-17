@@ -11,40 +11,40 @@ def validate_splitting(ml_pipeline_params):
     :return: None
     """
 
-    assert 'splitting' in ml_pipeline_params
-    splitting = ml_pipeline_params['splitting']
+    assert "splitting" in ml_pipeline_params
+    splitting = ml_pipeline_params["splitting"]
 
     # check ordered properly
-    assert splitting['training_random_start'] <= splitting['training_random_end']
-    assert splitting['validation_random_start'] <= splitting['validation_random_end']
+    assert splitting["training_random_start"] <= splitting["training_random_end"]
+    assert splitting["validation_random_start"] <= splitting["validation_random_end"]
 
     # all within 0 to 1
-    assert 0 <= splitting['training_random_start'] <= 1
-    assert 0 <= splitting['training_random_end'] <= 1
-    assert 0 <= splitting['validation_random_start'] <= 1
-    assert 0 <= splitting['validation_random_end'] <= 1
+    assert 0 <= splitting["training_random_start"] <= 1
+    assert 0 <= splitting["training_random_end"] <= 1
+    assert 0 <= splitting["validation_random_start"] <= 1
+    assert 0 <= splitting["validation_random_end"] <= 1
 
     # no overlap in range
-    one = splitting['training_random_start'] >= splitting['validation_random_end']
-    the_other = splitting['validation_random_start'] >= splitting['training_random_end']
+    one = splitting["training_random_start"] >= splitting["validation_random_end"]
+    the_other = splitting["validation_random_start"] >= splitting["training_random_end"]
     assert one or the_other
 
 
 def splitter(ml_pipeline_params):
-    identifier = ml_pipeline_params['identifier_field']
-    splitting = ml_pipeline_params.get('splitting')
+    identifier = ml_pipeline_params["identifier_field"]
+    splitting = ml_pipeline_params.get("splitting")
 
     if splitting is None:
         return None, None
     else:
         validate_splitting(ml_pipeline_params)
 
-    seed = splitting['random_seed']
+    seed = splitting["random_seed"]
 
-    train_start = splitting['training_random_start']
-    train_end = splitting['training_random_end']
-    validation_start = splitting['validation_random_start']
-    validation_end = splitting['validation_random_end']
+    train_start = splitting["training_random_start"]
+    train_end = splitting["training_random_end"]
+    validation_start = splitting["validation_random_start"]
+    validation_end = splitting["validation_random_end"]
 
     def training_filter(row):
         hash_val = hash_to_uniform_random(row[identifier], seed)

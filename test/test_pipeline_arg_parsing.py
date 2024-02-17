@@ -1,5 +1,6 @@
 from scripts import pipeline as pipeline_script
 
+
 def test_no_arguments_parse():
     argument_parser = pipeline_script.make_argument_parser()
     parsed_arguments = argument_parser.parse_args([])
@@ -19,6 +20,7 @@ def test_problem_name_supplied():
     assert parsed_arguments.algorithm_name == "default"
     assert parsed_arguments.algorithm_params_name == "default"
 
+
 def test_all_argument_supplied():
     argument_parser = pipeline_script.make_argument_parser()
     parsed_arguments = argument_parser.parse_args(["groceries", "a", "b", "c", "d"])
@@ -27,4 +29,3 @@ def test_all_argument_supplied():
     assert parsed_arguments.feature_set_name == "b"
     assert parsed_arguments.algorithm_name == "c"
     assert parsed_arguments.algorithm_params_name == "d"
-
